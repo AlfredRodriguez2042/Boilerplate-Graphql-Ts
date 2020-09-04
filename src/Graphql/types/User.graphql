@@ -1,0 +1,51 @@
+type Query {
+  User(id: ID): User!
+  Users: [User!]
+}
+type User implements Node {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  active: Boolean!
+  createdAt: Date!
+}
+
+type UserShort {
+  id: ID
+  name: String
+}
+type authPayload {
+  token: String!
+  user: UserShort
+}
+
+type Mutation {
+  createUser(input: UserInput!): User!
+  updateUser(input: UserUpdateInput!): User!
+  deleteUser(id: ID!): User!
+  login(input: LoginInput!): authPayload!
+  logout(input: LogoutInput): Boolean
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
+  roles: String
+}
+
+input UserUpdateInput {
+  id: ID
+  email: String
+  password: String
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input LogoutInput {
+  id: ID
+}

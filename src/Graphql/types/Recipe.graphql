@@ -1,0 +1,33 @@
+type Query {
+  Recipe(id: ID!): Recipe!
+  Recipies: [Recipe!]
+}
+
+type Recipe implements Node {
+  id: ID!
+  name: String!
+  description: String!
+  ingredients: String!
+  image: String
+  createdAt: Date!
+  categories: [Category]
+}
+
+type Mutation {
+  createRecipe(input: RecipeInput!): Recipe!
+  updateRecipe(input: UpdateRecipeInput!): Recipe!
+  deleteRecipe(id: ID!): Recipe
+}
+
+input RecipeInput {
+  name: String!
+  ingredients: String!
+  description: String!
+  categories: [CategoryInput]!
+}
+input UpdateRecipeInput {
+  name: String!
+  ingredients: String!
+  description: String!
+  categories: [CategoryInput]
+}
