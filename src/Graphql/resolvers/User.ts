@@ -1,25 +1,43 @@
-import { getRepository } from 'typeorm'
-import { User } from '../../entity/User'
+import { getRepository, getConnection } from 'typeorm'
+import { Users } from '../../entity/Users'
 
 export default {
   Query: {
     User: (_: any, { id }: any): any => {
-      const user = getRepository(User).findByIds(id)
+      const user = getRepository(Users).findOne({
+        where: { id },
+        relations: ['recipe'],
+      })
+
       return user
     },
-    Users: () => {
-      return getRepository(User).find()
+    Users: async () => {
+      const user = await getRepository(Users).find({ relations: ['recipe'] })
+      return user
     },
   },
   Mutation: {
     createUser: (_: any, { input }: any): any => {
-      return getRepository(User).create(input)
+      const user = getRepository(Users).create(input)
+      return getRepository(Users).save(user)
     },
-    updateUser: (_: any, { input }: any): any => {
-      console.log(input)
-      return null
+    updateUser: async (_: any, { input }: any): Promise<any> => {
+      await getConnection()
+        .createQueryBuilder()
+        .update(Users)
+        .set({ email: input.email })
+        .where('id= :id', { id: input.id })
+        .execute()
+
+      return true
     },
-    deleteUser: () => {
+    deleteUser: async (_: any, { id }: any): Promise<any> => {
+      await getConnection()
+        .createQueryBuilder()
+        .delete()
+        .from(Users)
+        .where('id= :id', { id })
+        .execute()
       return true
     },
   },

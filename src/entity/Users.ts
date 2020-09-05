@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
 import { Recipe } from './Recipe'
 
 @Entity()
-export class User {
+export class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
@@ -15,9 +15,6 @@ export class User {
   @Column()
   password: string
 
-  @Column()
-  isActive: boolean
-
-  @OneToMany(() => Recipe, (recipe) => recipe.author)
-  recipies: Recipe[]
+  @OneToMany(() => Recipe, (recipe: Recipe) => recipe.author)
+  recipe: Recipe[]
 }

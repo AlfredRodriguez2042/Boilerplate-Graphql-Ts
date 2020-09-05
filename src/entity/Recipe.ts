@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
 
-import { User } from './User'
+import { Users } from './Users'
 
 import { Category } from './Category'
 
@@ -21,6 +21,6 @@ export class Recipe {
   @ManyToOne(() => Category, (category) => category.recipe)
   category: Category
 
-  @ManyToOne(() => User, (user) => user.recipies)
-  author: User
+  @ManyToOne(() => Users, (users: Users) => users.recipe)
+  author: Users
 }

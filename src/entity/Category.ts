@@ -10,5 +10,5 @@ export class Category {
   name: string
 
   @OneToMany(() => Recipe, (recipes) => recipes.category)
-  recipe: Recipe
+  recipe: Recipe[]
 }

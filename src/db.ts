@@ -4,3 +4,7 @@ export const createTypeormConn = async () => {
   const connectionOptions = await getConnectionOptions(process.env.NODE_ENV)
   return createConnection({ ...connectionOptions, name: 'default' })
 }
+
+//  export const createTypeormConn= createConnection().then(async(connection)=>{
+//    console.log("database is connected")
+//  })

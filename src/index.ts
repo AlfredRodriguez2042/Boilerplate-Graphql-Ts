@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 4000
 const httpServer = createServer(App)
 async function main() {
   try {
-    await createTypeormConn
+    await createTypeormConn()
     httpServer.listen(PORT, (): void => {
       console.log(
         `>>>  🚀   Server ready at http://localhost:${PORT}${server.graphqlPath}`
