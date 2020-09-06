@@ -1,5 +1,5 @@
 import { getRepository, getConnection } from 'typeorm'
-import { Users } from '../../entity/Users'
+import { Users } from '../../entity'
 
 export default {
   Query: {

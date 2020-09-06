@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinTable,
+} from 'typeorm'
 
 import { Users } from './Users'
 
@@ -18,9 +24,14 @@ export class Recipe {
   @Column()
   ingredients: string
 
-  @ManyToOne(() => Category, (category) => category.recipe)
+  @ManyToOne(() => Category, (category: Category) => category.recipe, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinTable()
   category: Category
 
   @ManyToOne(() => Users, (users: Users) => users.recipe)
+  @JoinTable()
   author: Users
 }
