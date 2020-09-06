@@ -3,14 +3,18 @@ import { Recipe, Category } from '../../entity'
 
 export default {
   Query: {
-    Recipe: (_: any, { id }: any): any => {
+    getMyRecipe: (_: any, { id }: any): any => {
       const user = getRepository(Recipe).findOne(id)
       return user
     },
-    Recipies: () => {
+    getRecipes: () => {
       return getRepository(Recipe).find({ relations: ['category', 'author'] })
     },
-    Categories: () => {
+    getOneRecipe: (_: any, { id }: any): any => {
+      const user = getRepository(Recipe).findOne(id)
+      return user
+    },
+    getCategories: () => {
       return getRepository(Category).find({ relations: ['recipe'] })
     },
   },

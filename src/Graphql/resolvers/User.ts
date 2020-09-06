@@ -3,7 +3,7 @@ import { Users } from '../../entity'
 
 export default {
   Query: {
-    User: (_: any, { id }: any): any => {
+    getUser: (_: any, { id }: any): any => {
       const user = getRepository(Users).findOne({
         where: { id },
         relations: ['recipe'],
@@ -11,13 +11,13 @@ export default {
 
       return user
     },
-    Users: async () => {
+    getUsers: async () => {
       const user = await getRepository(Users).find({ relations: ['recipe'] })
       return user
     },
   },
   Mutation: {
-    createUser: (_: any, { input }: any): any => {
+    signUp: (_: any, { input }: any): any => {
       const user = getRepository(Users).create(input)
       return getRepository(Users).save(user)
     },

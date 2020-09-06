@@ -1,4 +1,5 @@
 import { createServer } from 'http'
+import 'reflect-metadata'
 import { App, server } from './server'
 import { createTypeormConn } from './db'
 

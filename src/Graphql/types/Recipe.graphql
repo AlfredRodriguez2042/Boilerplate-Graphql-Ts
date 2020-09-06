@@ -1,6 +1,7 @@
 type Query {
-  Recipe(id: ID!): Recipe!
-  Recipies: [Recipe!]
+  getMyRecipe(id: ID!): Recipe!
+  getOneRecipe(id: ID!): Recipe!
+  getRecipes: [Recipe!]
 }
 
 type Recipe implements Node {

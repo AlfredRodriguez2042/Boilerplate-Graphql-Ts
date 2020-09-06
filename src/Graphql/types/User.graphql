@@ -1,6 +1,6 @@
 type Query {
-  User(id: ID): User!
-  Users: [User!]
+  getUser(id: ID): User!
+  getUsers: [User!]
 }
 type User implements Node {
   id: ID!
@@ -9,7 +9,13 @@ type User implements Node {
   password: String!
   active: Boolean!
   createdAt: Date!
+  role: [Role]!
   recipe: [Recipe!]
+}
+
+enum Roles {
+  user
+  admin
 }
 
 type UserShort {
@@ -22,10 +28,10 @@ type authPayload {
 }
 
 type Mutation {
-  createUser(input: UserInput!): User!
+  signUp(input: UserInput!): User!
   updateUser(input: UserUpdateInput!): Boolean!
   deleteUser(id: ID!): Boolean!
-  login(input: LoginInput!): authPayload!
+  Login(input: LoginInput!): authPayload!
   logout(input: LogoutInput): Boolean
 }
 
