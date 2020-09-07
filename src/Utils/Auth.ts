@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-import { Response } from 'express'
+import { Response, Request } from 'express'
+import { AuthenticationError } from 'apollo-server-express'
 
 export const CreateSendToken = (id: string, res: Response): string => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET as string, {
@@ -15,4 +16,9 @@ export const CreateSendToken = (id: string, res: Response): string => {
     console.log(error)
   }
   return token
+}
+export const isAuth = (req: Request) => {
+  if (!req.headers.cookie) {
+    throw new AuthenticationError('Error, must be authenticated')
+  }
 }
