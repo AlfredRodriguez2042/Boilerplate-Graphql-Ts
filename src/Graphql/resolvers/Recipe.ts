@@ -1,50 +1,32 @@
-import { getRepository, getConnection } from 'typeorm'
-import { Recipe, Category } from '../../entity'
+import { getConnection } from 'typeorm'
+import { Request } from 'express'
+import { Recipe } from '../../entity'
+import {
+  myRecipeController,
+  recipesController,
+  oneRecipecontroller,
+  createRecipeController,
+} from '../../Controllers/Recipe.Controller'
 
 export default {
   Query: {
-    getMyRecipe: (_: any, { id }: any): any => {
-      const user = getRepository(Recipe).find({
-        where: { author: id },
-        relations: ['author', 'category'],
-      })
-      return user
+    getMyRecipe: (_: any, { id }: { id: string }): any => {
+      return myRecipeController(id)
     },
     getRecipes: () => {
-      return getRepository(Recipe).find({ relations: ['category', 'author'] })
+      return recipesController()
     },
-    getOneRecipe: (_: any, { id }: any): any => {
-      const user = getRepository(Recipe).findOne(id)
-      return user
-    },
-    getCategories: () => {
-      return getRepository(Category).find({ relations: ['recipe'] })
+    getOneRecipe: (_: any, { id }: { id: string }): any => {
+      return oneRecipecontroller(id)
     },
   },
   Mutation: {
-    createRecipe: async (_: any, { input }: any): Promise<any> => {
-      const { category, ...data } = input
-      const findCategory = await getRepository(Category).findOne({
-        where: { name: category },
-      })
-
-      let newCategory: any
-
-      if (!findCategory) {
-        newCategory = getRepository(Category).create({ name: category })
-      } else {
-        newCategory = findCategory
-      }
-
-      const recipe = getRepository(Recipe).create({
-        author: data.author,
-        category: newCategory,
-        ingredients: data.ingredients,
-        description: data.description,
-        name: data.name,
-      })
-
-      return getRepository(Recipe).save(recipe)
+    createRecipe: async (
+      _: any,
+      { input }: any,
+      { req }: { req: Request }
+    ): Promise<any> => {
+      return createRecipeController({ input })
     },
     updateRecipe: async (_: any, { input }: any): Promise<any> => {
       await getConnection()
