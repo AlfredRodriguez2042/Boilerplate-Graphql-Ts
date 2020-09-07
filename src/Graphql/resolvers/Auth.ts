@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
-import { LoginController } from '../../Controllers/Auth.Controller'
+import {
+  LoginController,
+  LogoutController,
+} from '../../Controllers/Auth.Controller'
 
 export default {
   Mutation: {
@@ -9,6 +12,9 @@ export default {
       { req, res }: { req: Request; res: Response }
     ) => {
       return LoginController({ input }, { req, res })
+    },
+    Logout: (_: any, { input }: any, { res }: { res: Response }) => {
+      return LogoutController({ input }, { res })
     },
   },
 }

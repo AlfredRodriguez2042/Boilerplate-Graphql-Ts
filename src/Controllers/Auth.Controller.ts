@@ -24,3 +24,14 @@ export const LoginController = async (
   console.log(req.headers)
   return { token, user }
 }
+export const LogoutController = (
+  { input }: any,
+  { res }: { res: Response }
+) => {
+  console.log(input)
+  res.cookie('x-token', 'logout...', {
+    httpOnly: true,
+    expires: new Date(Date.now() + 1),
+  })
+  return true
+}

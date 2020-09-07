@@ -9,7 +9,7 @@ type User implements Node {
   password: String!
   active: Boolean!
   createdAt: Date!
-  role: [Role]!
+  role: [Roles]!
   recipe: [Recipe!]
 }
 
@@ -32,7 +32,7 @@ type Mutation {
   updateUser(input: UserUpdateInput!): Boolean!
   deleteUser(id: ID!): Boolean!
   Login(input: LoginInput!): authPayload!
-  logout(input: LogoutInput): Boolean
+  Logout(input: LogoutInput): Boolean
 }
 
 input UserInput {
