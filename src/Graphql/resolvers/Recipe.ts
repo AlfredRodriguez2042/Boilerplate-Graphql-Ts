@@ -34,10 +34,10 @@ export default {
     },
     deleteRecipe: (
       _: any,
-      { id }: { id: string },
+      { id, userId }: { id: string; userId: string },
       { req }: { req: Request }
     ): any => {
-      return deleteRecipeController(id, { req })
+      return deleteRecipeController({ userId, id }, { req })
     },
   },
 }

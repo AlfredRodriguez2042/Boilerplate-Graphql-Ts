@@ -68,15 +68,17 @@ export const updateRecipeController = async (
   return true
 }
 export const deleteRecipeController = async (
-  id: string,
+  { userId, id }: { userId: string; id: string },
   { req }: any
 ): Promise<boolean> => {
   isAuth(req)
-  console.log(req.userId)
   const user = await getRepository(Recipe).findOne({
-    where: { author: req.userId },
+    where: { author: userId },
   })
-  console.log(user)
+  if (!user) {
+    throw new Error('usuario invalido')
+  }
+  console.log(user.author)
 
   await getConnection()
     .createQueryBuilder()

@@ -18,7 +18,7 @@ type Recipe implements Node {
 type Mutation {
   createRecipe(input: RecipeInput!): Recipe!
   updateRecipe(input: UpdateRecipeInput!): Boolean!
-  deleteRecipe(id: ID!): Boolean!
+  deleteRecipe(id: ID!, userId: String): Boolean!
 }
 
 input RecipeInput {
