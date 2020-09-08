@@ -4,10 +4,29 @@ export interface ResolverMap {
   }
 }
 
+export interface IToken {
+  id: string
+  iat: number
+  exp: number
+}
+export interface IUser {
+  id: string
+  email: string
+  name: string
+  password: string
+}
 export interface IUserAuth {
   token: string
-  user: object
+  user: IUser
 }
-export interface IToken {
-  token: string
+export interface ICategory {
+  name: string
+}
+export interface IRecipe {
+  name: string
+  description: string
+  id: string
+  author: IUser
+  ingredients: string
+  category: ICategory
 }

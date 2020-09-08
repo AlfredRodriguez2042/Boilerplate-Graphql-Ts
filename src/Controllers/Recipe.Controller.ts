@@ -1,12 +1,14 @@
 import { getRepository, getConnection } from 'typeorm'
 import { Recipe, Category } from '../entity'
+import { isAuth } from '../Utils/Auth'
+import { IRecipe } from '../interfaces'
 
-export const myRecipeController = (id: string) => {
-  const user = getRepository(Recipe).find({
+export const myRecipeController = async (id: string): Promise<IRecipe[]> => {
+  const recipe = await getRepository(Recipe).find({
     where: { author: id },
     relations: ['author', 'category'],
   })
-  return user
+  return recipe
 }
 
 export const recipesController = () => {
@@ -19,9 +21,14 @@ export const oneRecipecontroller = (id: string) => {
     relations: ['category', 'author'],
   })
 }
-export const createRecipeController = (input: any) => {
+export const createRecipeController = async (
+  { input }: any,
+  { req }: any
+): Promise<IRecipe> => {
+  isAuth(req)
   const { category, ...data } = input
-  const findCategory = getRepository(Category).findOne({
+
+  const findCategory = await getRepository(Category).findOne({
     where: { name: category },
   })
 
@@ -43,7 +50,11 @@ export const createRecipeController = (input: any) => {
 
   return getRepository(Recipe).save(recipe)
 }
-export const updateRecipeController = async (input: any) => {
+export const updateRecipeController = async (
+  input: any,
+  req: any
+): Promise<boolean> => {
+  isAuth(req)
   await getConnection()
     .createQueryBuilder()
     .update(Recipe)
@@ -53,6 +64,25 @@ export const updateRecipeController = async (input: any) => {
       ingredients: input.ingredients,
     })
     .where('id= :id', { id: input.id })
+    .execute()
+  return true
+}
+export const deleteRecipeController = async (
+  id: string,
+  { req }: any
+): Promise<boolean> => {
+  isAuth(req)
+  console.log(req.userId)
+  const user = await getRepository(Recipe).findOne({
+    where: { author: req.userId },
+  })
+  console.log(user)
+
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Recipe)
+    .where('id= :id', { id })
     .execute()
   return true
 }

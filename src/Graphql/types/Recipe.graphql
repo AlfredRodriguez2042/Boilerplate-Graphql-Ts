@@ -1,5 +1,5 @@
 type Query {
-  getMyRecipe(id: ID!): Recipe!
+  getMyRecipe(id: ID!): [Recipe]!
   getOneRecipe(id: ID!): Recipe!
   getRecipes: [Recipe!]
 }

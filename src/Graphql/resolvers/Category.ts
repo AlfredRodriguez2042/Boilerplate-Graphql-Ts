@@ -23,8 +23,12 @@ export default {
     updateCategory: (_: any, { input }: any, { req }: { req: Request }) => {
       return updateCategoryController({ input }, req)
     },
-    deleteCategory: (_: any, { input }: any, { req }: { req: Request }) => {
-      return deleteCategoryController(input, req)
+    deleteCategory: (
+      _: any,
+      { id }: { id: string },
+      { req }: { req: Request }
+    ) => {
+      return deleteCategoryController({ id }, req)
     },
   },
 }

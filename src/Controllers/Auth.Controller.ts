@@ -1,13 +1,13 @@
 import { getRepository } from 'typeorm'
 import { compare } from 'bcrypt'
-import { Response, Request } from 'express'
+import { Response } from 'express'
 import { CreateSendToken } from '../Utils/Auth'
 import { validationLogin } from '../Utils/Validations'
 import { Users } from '../entity'
 
 export const LoginController = async (
   { input }: any,
-  { req, res }: { req: Request; res: Response }
+  { res, req }: { req: any; res: Response }
 ): Promise<any> => {
   const { error } = validationLogin(input)
   if (error) {
@@ -25,8 +25,9 @@ export const LoginController = async (
   if (!IsMatch) {
     throw new Error('invalid email/password, try again')
   }
+  req.userId = user.id
   const token = CreateSendToken(user.id, res)
-  console.log(req.headers)
+
   return { token, user }
 }
 export const LogoutController = (

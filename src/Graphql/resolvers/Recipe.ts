@@ -1,11 +1,12 @@
-import { getConnection } from 'typeorm'
 import { Request } from 'express'
-import { Recipe } from '../../entity'
+
 import {
   myRecipeController,
   recipesController,
   oneRecipecontroller,
   createRecipeController,
+  updateRecipeController,
+  deleteRecipeController,
 } from '../../Controllers/Recipe.Controller'
 
 export default {
@@ -21,28 +22,22 @@ export default {
     },
   },
   Mutation: {
-    createRecipe: async (
+    createRecipe: (_: any, { input }: any, { req }: { req: Request }) => {
+      return createRecipeController({ input }, { req })
+    },
+    updateRecipe: async (
       _: any,
       { input }: any,
       { req }: { req: Request }
     ): Promise<any> => {
-      return createRecipeController({ input })
+      return updateRecipeController(input, req)
     },
-    updateRecipe: async (_: any, { input }: any): Promise<any> => {
-      await getConnection()
-        .createQueryBuilder()
-        .update(Recipe)
-        .set({
-          ingredients: input.ingredients,
-          description: input.description,
-          name: input.name,
-        })
-        .where('id= :id', { id: input.id })
-        .execute()
-      return true
-    },
-    deleteRecipe: (): any => {
-      return true
+    deleteRecipe: (
+      _: any,
+      { id }: { id: string },
+      { req }: { req: Request }
+    ): any => {
+      return deleteRecipeController(id, { req })
     },
   },
 }
