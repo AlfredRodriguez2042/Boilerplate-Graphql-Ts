@@ -3,5 +3,6 @@ import { mergeTypeDefs } from '@graphql-tools/merge'
 import { loadFilesSync } from '@graphql-tools/load-files'
 
 const typesArray = loadFilesSync(path.join(__dirname, './'))
+const typeDefs = mergeTypeDefs(typesArray)
 
-export default mergeTypeDefs(typesArray)
+export default typeDefs
