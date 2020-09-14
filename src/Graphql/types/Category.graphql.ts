@@ -1,3 +1,5 @@
+export default `
+
 type Query {
   getCategories: [Category]
   getOneCategory: Category!
@@ -19,3 +21,5 @@ input UpdateCategoryInput {
   id: ID!
   name: String!
 }
+
+`

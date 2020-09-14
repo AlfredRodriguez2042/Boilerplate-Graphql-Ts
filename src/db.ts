@@ -1,10 +1,6 @@
-import { getConnectionOptions, createConnection } from 'typeorm'
+import { createConnection, getConnectionOptions } from 'typeorm'
 
 export const createTypeormConn = async () => {
   const connectionOptions = await getConnectionOptions(process.env.NODE_ENV)
-  return createConnection({ ...connectionOptions, name: 'default' })
+  return createConnection({ ...connectionOptions, name: 'default' } as any)
 }
-
-//  export const createTypeormConn= createConnection().then(async(connection)=>{
-//    console.log("database is connected")
-//  })

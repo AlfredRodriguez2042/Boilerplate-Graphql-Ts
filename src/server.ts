@@ -1,7 +1,8 @@
 import { ApolloServer } from 'apollo-server-express'
 import cookierParser from 'cookie-parser'
 import express from 'express'
-import { schema } from './Graphql/index'
+import depthLimit from 'graphql-depth-limit'
+import { schema } from './Graphql'
 
 const app = express()
 const path = '/graphql'
@@ -11,14 +12,15 @@ const cors = {
 }
 app.use(cookierParser())
 
-const context: any = async ({ req, res }: any) => {
-  return { req, res }
-}
 export const server = new ApolloServer({
   schema,
-  tracing: process.env.NODE_ENV === 'development',
-  introspection: process.env.NODE_ENV === 'development',
-  context,
+  tracing: true,
+  introspection: true,
+  context: ({ req, res }) => ({
+    req,
+    res,
+  }),
+  validationRules: [depthLimit(5)],
 })
 
 server.applyMiddleware({ app, path, cors })

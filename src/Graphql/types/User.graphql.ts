@@ -1,3 +1,5 @@
+export default `
+
 type Query {
   getUser(id: ID): User!
   getUsers: [User!]
@@ -56,3 +58,5 @@ input LoginInput {
 input LogoutInput {
   id: ID
 }
+
+`

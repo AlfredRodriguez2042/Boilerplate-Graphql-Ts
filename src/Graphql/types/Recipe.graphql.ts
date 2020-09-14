@@ -1,3 +1,5 @@
+export default `
+
 type Query {
   getMyRecipe(id: ID!): [Recipe]!
   getOneRecipe(id: ID!): Recipe!
@@ -34,3 +36,5 @@ input UpdateRecipeInput {
   description: String!
   category: CategoryInput
 }
+
+`
